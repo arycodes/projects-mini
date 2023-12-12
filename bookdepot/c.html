@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Order Form</title>
+    <title>Sharmaji Book Depot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="resources/logo.png" type="image/x-icon">
+    <div class="head">
+        <div class="logo">
+            <img src="resources/logo.png" alt="" onclick="toggleTheme()">
+            <p>Sharmaji Book Depot</p>
+        </div>
+
+
+        <div class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#Online Services">Online Services</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #bookForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Contact Us</h2>
+        <a href="tel:your_phone_number" class="contact-button">Call us</a>
+        <a href="https://wa.me/your_whatsapp_number" class="contact-button" target="_blank">WhatsApp us</a>
+      </div>
+
+    <script>
+        function sendToWhatsApp() {
+            const phoneNumber = '9671008184'; // Replace with your target phone number
+            const name = document.getElementById('name').value;
+            let bookTitles = document.getElementById('bookNames').value;
+            bookTitles = bookTitles.replace(/\n/g, ',');
+
+            const whatsappMessage = `Hi, my name is ${name}. I would like to order the following books: ${bookTitles}`;
+
+            // Construct the WhatsApp URI with the pre-filled message and phone number
+            const whatsappURI = `https://wa.me/+91${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+            // Open WhatsApp with the pre-filled message and phone number
+            window.location.href = whatsappURI;
+        }
+    </script>
+</body>
+
+</html>
