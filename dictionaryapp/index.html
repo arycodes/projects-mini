@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary APP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, rgba(52, 152, 219, 0.8), rgba(41, 127, 185, 0.485));
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(102, 102, 102, 0.5);
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            transform: translateZ(20px);
+            transition: transform 0.5s ease;
+        }
+
+        .container:hover {
+            transform: translateZ(0);
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        #wordInput {
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid #3498db;
+            border-radius: 0;
+            font-size: 16px;
+            position: relative;
+            transition: border-bottom 0.3s;
+            outline: none;
+        }
+
+        #wordInput:focus {
+            border-bottom: 2px solid #2980b9;
+        }
+
+        #wordInput::before {
+            content: '\f128';
+            font-family: 'Font Awesome 6 Free';
+            position: absolute;
+            color: #3498db;
+            font-size: 18px;
+            margin-left: -30px;
+            margin-top: 12px;
+            z-index: 1;
+        }
+
+        #searchBtn,
+        #soundBtn {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #2980b9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+
+        #searchBtn:hover,
+        #soundBtn:hover {
+            background-color: #2c3e50;
+        }
+
+        #soundBtn i {
+            font-family: 'Font Awesome 6 Free';
+            margin-right: 5px;
+        }
+
+        #soundBtn:disabled i {
+            color: #ccc;
+        }
+
+        #resultContainer {
+            margin-top: 30px;
+            color: #333;
+            text-align: left;
+        }
+
+        .result {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .part-of-speech {
+            font-style: italic;
+            color: #3498db;
+        }
+
+        .phonetic {
+            color: #2980b9;
+            margin-top: 5px;
+        }
+
+        .definition {
+            margin-top: 10px;
+        }
+
+        .example {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+
+            #wordInput,
+            #searchBtn,
+            #soundBtn {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dictionary APP</h1>
+        <input type="text" id="wordInput" placeholder="Enter a word" onkeydown="handleKeyDown(event)">
+        <button id="searchBtn" onclick="searchWord()">Search</button>
+        <button id="soundBtn" onclick="playSound()" disabled><i class="fas fa-volume-up"></i> Pronounce</button>
+        <div id="resultContainer"></div>
+    </div>
+    <script>
+        let sound;
+
+        function searchWord() {
+            const wordInput = document.getElementById('wordInput');
+            const resultContainer = document.getElementById('resultContainer');
+            const soundBtn = document.getElementById('soundBtn');
+
+            const word = wordInput.value.trim();
+
+            if (word !== '') {
+                const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (Array.isArray(data) && data.length > 0) {
+                            displayResult(data[0]);
+                            sound = new Audio(data[0].phonetics[0].audio);
+                            soundBtn.disabled = false;
+                        } else {
+                            displayError('Word not found');
+                        }
+                    })
+                    .catch(error => {
+                        displayError('Error fetching data');
+                    });
+            } else {
+                displayError('Please enter a word');
+            }
+        }
+
+        function displayResult(data) {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `
+            <div class="result">
+                    <h2>${data.word}</h2>
+                    <p class="part-of-speech">${data.meanings[0].partOfSpeech}</p>
+                    <p class="phonetic">${data.phonetic}</p>
+                    <p class="definition">${data.meanings[0].definitions[0].definition}</p>
+                    <p class="example">${data.meanings[0].definitions[0].example}</p>
+                </div>
+            `;
+        }
+
+        function displayError(message) {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `<p class="error">${message}</p>`;
+        }
+
+        function playSound() {
+            if (sound) {
+                sound.play();
+            }
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === 'Enter') {
+                searchWord();
+            }
+        }
+    </script>
+</body>
+
+</html>
