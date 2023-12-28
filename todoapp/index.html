@@ -1,175 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TO-DO APP - AryCodes </title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
-    html{
-
-    body {
-      background: linear-gradient(45deg, #a6c0fe, #8ca6fc);
-      margin: 0;
-      padding: 20px;
-      height: 100%;
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
-    }
+      body {
+        background: linear-gradient(45deg, #a6c0fe, #8ca6fc);
+        margin: 0;
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+      }
 
 
 
-    .app-container {
-      width: 100%;
-      max-width: 600px;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    }
+      .app-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
 
 
-    h1 {
-      text-align: center;
-      color: #4285f4;
-      font-weight: bold;
-    }
+      h1 {
+        text-align: center;
+        color: #4285f4;
+        font-weight: bold;
+      }
 
-    .task-input {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+      .task-input {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
 
-    .task-input i {
-      font-size: 24px;
-      margin-right: 10px;
-      color: #4285f4;
-    }
+      .task-input i {
+        font-size: 24px;
+        margin-right: 10px;
+        color: #4285f4;
+      }
 
-    .task-input input {
-      flex-grow: 1;
-      padding: 10px;
-      border: 1px solid #4285f4;
-      border-radius: 4px;
-      font-size: 16px;
-      background-color: rgba(255, 255, 255, 0.9);
-    }
+      .task-input input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #4285f4;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
 
-    .controls {
-      margin-bottom: 20px;
-    }
+      .controls {
+        margin-bottom: 20px;
+      }
 
-    .filters {
-      display: flex;
-      justify-content: center;
-    }
+      .filters {
+        display: flex;
+        justify-content: center;
+      }
 
-    .filters span {
-      cursor: pointer;
-      padding: 10px;
-      margin: 0 5px;
-      border: 1px solid #4285f4;
-      border-radius: 4px;
-      color: #4285f4;
-      background-color: rgba(255, 255, 255, 0.8);
-    }
+      .filters span {
+        cursor: pointer;
+        padding: 10px;
+        margin: 0 5px;
+        border: 1px solid #4285f4;
+        border-radius: 4px;
+        color: #4285f4;
+        background-color: rgba(255, 255, 255, 0.8);
+      }
 
-    .filters span.active {
-      background-color: #4285f4;
-      color: #fff;
-    }
+      .filters span.active {
+        background-color: #4285f4;
+        color: #fff;
+      }
 
-    .task-box {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
+      .task-box {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
 
-    .task {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid #4285f4;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      padding: 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-    }
+      .task {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #4285f4;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
 
-    .task label {
-      display: flex;
-      align-items: center;
-    }
+      .task label {
+        display: flex;
+        align-items: center;
+      }
 
-    .task p {
-      margin: 0;
-      flex-grow: 1;
-      padding-left: 10px;
-      color: #4c4c4c;
-    }
+      .task p {
+        margin: 0;
+        flex-grow: 1;
+        padding-left: 10px;
+        color: #4c4c4c;
+      }
 
-    .checked {
-      text-decoration: line-through;
-      color: #888;
-    }
+      .checked {
+        text-decoration: line-through;
+        color: #888;
+      }
 
-    .settings {
-      position: relative;
-    }
+      .settings {
+        position: relative;
+      }
 
-    .uil-ellipsis-h {
-      cursor: pointer;
-    }
+      .uil-ellipsis-h {
+        cursor: pointer;
+      }
 
-    .task-menu {
-      position: absolute;
-      top: 20px;
-      right: 0;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #4285f4;
-      border-radius: 4px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      list-style: none;
-      padding: 0;
-      display: none;
-    }
+      .task-menu {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid #4285f4;
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        padding: 0;
+        display: none;
+      }
 
-    .task-menu li {
-      cursor: pointer;
-      padding: 10px;
-    }
+      .task-menu li {
+        cursor: pointer;
+        padding: 10px;
+      }
 
-    .task-menu li:hover {
-      background-color: #f4f4f4;
-    }
+      .task-menu li:hover {
+        background-color: #f4f4f4;
+      }
 
-    .show {
-      display: block;
-    }
+      .show {
+        display: block;
+      }
 
-    .clear-btn {
-      cursor: pointer;
-      padding: 10px;
-      background-color: #4285f4;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      float: right;
-    }
+      .clear-btn {
+        cursor: pointer;
+        padding: 10px;
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        float: right;
+      }
 
-    .clear-btn.active {
-      background-color: #0d47a1;
-    }
+      .clear-btn.active {
+        background-color: #0d47a1;
+      }
 
-    .clear-btn:hover {
-      background-color: #0d47a1;
-    }
+      .clear-btn:hover {
+        background-color: #0d47a1;
+      }
   </style>
 </head>
 
@@ -298,10 +297,11 @@
       }
     });
   </script>
-      <a id="floating-button" href="https://www.instagram.com/arycodes" target="_blank"
-      style="position:fixed;bottom:20px;right:20px;background-color:#fff;color:#000;border:none;border-radius:50%;padding:15px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:background-color 0.3s ease,transform 0.3s ease;display:flex;align-items:center;justify-content:center;text-decoration:none;transform-style:preserve-3d;perspective:1000px;">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-      <i class="fab fa-instagram" style="font-size:24px;transform:rotateY(0deg);transition:transform 0.3s ease;"></i>
+  <a id="floating-button" href="https://www.instagram.com/arycodes" target="_blank"
+    style="position:fixed;bottom:20px;right:20px;background-color:#fff;color:#000;border:none;border-radius:50%;padding:15px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:background-color 0.3s ease,transform 0.3s ease;display:flex;align-items:center;justify-content:center;text-decoration:none;transform-style:preserve-3d;perspective:1000px;">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <i class="fab fa-instagram" style="font-size:24px;transform:rotateY(0deg);transition:transform 0.3s ease;"></i>
   </a>
 </body>
+
 </html>
