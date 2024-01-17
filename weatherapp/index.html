@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AryCodes Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .inputarea {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        input {
+            font-size: 14px;
+            width: 65%;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            padding: 10px 5px;
+            margin: 0 auto;
+        }
+
+        button {
+            font-size: 14px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 28%;
+            padding: 10px 5px;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #weather-display {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        #error-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e74c3c;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AryCodes Weather App</h1>
+        <form onsubmit="getWeather(); return false;">
+            <div class="inputarea">
+                <input type="text" id="city-entry" placeholder="Enter a city">
+                <button type="button" onclick="getWeather()">Search</button>
+            </div>
+        </form>
+
+        <div id="weather-display"></div>
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        const apiKey = "fd1dc5e631945eedc58e1b75eae8df9d";
+        const baseUrl = "https://api.openweathermap.org/data/2.5/weather?";
+
+        function extractImportantData(jsonData) {
+            const lon = jsonData.coord.lon;
+            const lat = jsonData.coord.lat;
+            const temperature = jsonData.main.temp;
+            const weatherDescription = jsonData.weather[0].description;
+            const cityName = jsonData.name;
+            return { lon, lat, temperature, weatherDescription, cityName };
+        }
+
+        function getWeather() {
+            const city = document.getElementById("city-entry").value;
+            const completeUrl = `${baseUrl}q=${city}&appid=${apiKey}&units=metric`;
+
+            fetch(completeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const weatherDisplay = document.getElementById("weather-display");
+                    const errorMessage = document.getElementById("error-message");
+
+                    if (data.cod !== "404") {
+                        const { lon, lat, temperature, weatherDescription, cityName } = extractImportantData(data);
+                        weatherDisplay.innerHTML = `
+                            <p>City: ${cityName}</p>
+                            <p>Longitude: ${lon}</p>
+                            <p>Latitude: ${lat}</p>
+                            <p>Temperature: ${temperature}°C</p>
+                            <p>Weather Description: ${weatherDescription}</p>
+                        `;
+                        errorMessage.innerHTML = '';
+                    } else {
+                        errorMessage.innerHTML = 'No City Found!';
+                        weatherDisplay.innerHTML = '';
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+
+        document.getElementById("city-entry").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getWeather();
+            }
+        });
+    </script>
+
+    <a id="floating-button" href="https://www.instagram.com/arycodes" target="_blank"
+        style="position:fixed;bottom:20px;right:20px;background-color:#fff;color:#000;border:none;border-radius:50%;padding:15px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:background-color 0.3s ease,transform 0.3s ease;display:flex;align-items:center;justify-content:center;text-decoration:none;transform-style:preserve-3d;perspective:1000px;">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+        <i class="fab fa-instagram" style="font-size:24px;transform:rotateY(0deg);transition:transform 0.3s ease;"></i>
+    </a>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AryCodes - Resume Maker</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+    <div id="resume">
+        <h1>AryCodes Resume Maker</h1>
+
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName">
+
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone">
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob">
+
+        <label for="address">Address:</label>
+        <textarea id="address"></textarea>
+
+        <h2>Education</h2>
+        <label for="education">Education:</label>
+        <textarea id="education"></textarea>
+
+        <h2>Work Experience</h2>
+        <label for="workExperience">Work Experience:</label>
+        <textarea id="workExperience"></textarea>
+
+        <h2>Skills</h2>
+        <label for="skills">Skills:</label>
+        <textarea id="skills"></textarea>
+
+        <h2>Summary</h2>
+        <label for="summary">Summary:</label>
+        <textarea id="summary"></textarea>
+
+
+
+        <button onclick="updateResume()">Generate Resume</button>
+        <button onclick="printResume()">Print Resume</button>
+
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function updateResume() {
+            const fullName = document.getElementById('fullName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const dob = document.getElementById('dob').value;
+
+            const address = document.getElementById('address').value;
+            const education = document.getElementById('education').value;
+            const workExperience = document.getElementById('workExperience').value;
+            const skills = document.getElementById('skills').value;
+            const summary = document.getElementById('summary').value;
+
+            const output = document.getElementById('output');
+            output.innerHTML = `
+        <h2>${fullName}</h2>
+        <p>${jobTitle}</p>
+        <p>Email: ${email}</p>
+        <p>Phone: ${phone}</p>
+        <p>Date of Birth: ${dob}</p>
+        <p>Address: ${address}</p>
+
+        <h2>Education</h2>
+        <ul>${formatList(education)}</ul>
+
+        <h2>Work Experience</h2>
+        <ul>${formatList(workExperience)}</ul>
+
+        <h2>Skills</h2>
+        <ul>${formatList(skills)}</ul>
+
+        <h2>Summary</h2>
+        <p>${summary}</p>
+      `;
+        }
+
+        function formatList(text) {
+            const items = text.split('\n\n').map(group => {
+                const groupItems = group.split('\n').map(item => item.trim());
+                return `<ul>${groupItems.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            });
+
+            return items.join('<br>');
+        }
+    </script>
+
+    <a id="floating-button" href="https://www.instagram.com/arycodes" target="_blank"
+        style="position:fixed;bottom:20px;right:20px;background-color:#fff;color:#000;border:none;border-radius:50%;padding:15px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:background-color 0.3s ease,transform 0.3s ease;display:flex;align-items:center;justify-content:center;text-decoration:none;transform-style:preserve-3d;perspective:1000px;">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+        <i class="fab fa-instagram"
+            style="font-size:24px;transform:rotateY(0deg);transition:transform 0.3s ease;"></i>
+    </a>
+
+</body>
+
+</html>

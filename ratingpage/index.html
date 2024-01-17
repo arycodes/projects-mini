@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Rating Page</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ecf0f1, #3498db);
+            /* Update color values */
+            margin: 0;
+        }
+
+        .rating-container {
+            background: linear-gradient(to right, #ffffff, #f0f0f0);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .star {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            font-size: 36px;
+            color: #aaa;
+            transition: transform 0.2s, color 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: #f8d400;
+            transform: scale(1.2);
+            /* Add a slight scale on hover or when selected */
+        }
+
+
+
+
+        .reaction-emoji {
+            font-size: 60px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rating-container">
+        <h2>How was your experience?</h2>
+        <div class="rating-stars">
+            <div class="star" onclick="selectStars(1)">★</div>
+            <div class="star" onclick="selectStars(2)">★</div>
+            <div class="star" onclick="selectStars(3)">★</div>
+            <div class="star" onclick="selectStars(4)">★</div>
+            <div class="star" onclick="selectStars(5)">★</div>
+        </div>
+        <div class="reaction-emoji"></div>
+    </div>
+    <script>
+        let selectedStars = 0;
+
+        function selectStars(stars) {
+            selectedStars = stars;
+            updateStars();
+        }
+
+        function updateStars() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < selectedStars);
+            });
+
+            const emojiCode = getEmojiCode(selectedStars);
+            const reactionEmoji = document.querySelector('.reaction-emoji');
+            reactionEmoji.textContent = emojiCode;
+        }
+
+        function getEmojiCode(rating) {
+            if (rating === 5) {
+                return '🤩';
+            } else if (rating >= 4) {
+                return '😊';
+            } else if (rating >= 3) {
+                return '😐';
+            } else if (rating >= 2) {
+                return '😕';
+            } else {
+                return '😞';
+            }
+        }
+    </script>
+</body>
+
+</html>

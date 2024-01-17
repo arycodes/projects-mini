@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analogue CLock Multiple Theme AryCodes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+        }
+
+
+        .container {
+            border: 2px solid #333;
+            height: 50%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+
+            position: relative;
+
+            justify-content: center;
+            align-items: center;
+
+            box-shadow: 0 0 20px 5px #33333360;
+
+        }
+
+        .hand {
+            position: absolute;
+            animation: rotate 10s linear infinite;
+
+            transform-origin: 0% 50%;
+            top: calc(50% - 2.5px);
+            border-radius: 10px;
+            left: 50%;
+        }
+
+
+        .hour {
+            width: 22%;
+            height: 8px;
+            background-color: black;
+        }
+
+
+        .minute {
+            width: 28%;
+            height: 6px;
+            background-color: black;
+        }
+
+        .second {
+            width: 35%;
+            height: 4px;
+            background-color: red;
+        }
+
+
+
+        .container {
+            background-image: url(clock1.jpg);
+            background-position: center center;
+            background-size: cover;
+        }
+
+
+        .optionscontainer {
+            margin: 20px auto;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+    <div class="container" id="container">
+        <div id="hourHand" class="hour hand"></div>
+        <div id="minuteHand" class="minute hand"></div>
+        <div id="secondHand" class="second hand"></div>
+
+    </div>
+
+
+    <div class="optionscontainer">
+        <label for="backgroundSelect">Select Clock Dial:</label>
+        <select id="backgroundSelect" onchange="changeBackground()">
+            <option value="clock1.jpg" data-color="#ffffff">Clock 1</option>
+            <option value="clock2.jpg" data-color="#e5e7e9">Clock 2</option>
+            <option value="clock3.jpg" data-color="#0175b0">Clock 3</option>
+            <option value="clock4.jpg" data-color="#209a47">Clock 4</option>
+            <option value="clock5.jpg" data-color="#e8edb2">Clock 5</option>
+        </select>
+    </div>
+
+
+    <a id="floating-button" href="https://www.instagram.com/arycodes" target="_blank"
+        style="position:fixed;bottom:20px;right:20px;background-color:#fff;color:#000;border:none;border-radius:50%;padding:15px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:background-color 0.3s ease,transform 0.3s ease;display:flex;align-items:center;justify-content:center;text-decoration:none;transform-style:preserve-3d;perspective:1000px;">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+        <i class="fab fa-instagram" style="font-size:24px;transform:rotateY(0deg);transition:transform 0.3s ease;"></i>
+    </a>
+
+</body>
+
+<script>
+    hourhand = document.getElementById('hourHand');
+    minhand = document.getElementById('minuteHand');
+    sechand = document.getElementById('secondHand');
+    function updateTime() {
+        let time = new Date();
+        let hours = time.getHours();
+        let minutes = time.getMinutes();
+        let seconds = time.getSeconds();
+
+        let hourrotation = - 90 + (360 / 12) * hours + (360 / 12) / 60 * minutes;
+        let minuterotation = - 90 + (360 / 60) * minutes + (360 / 60) / 60 * seconds;
+        let secondrotation = -90 + (360 / 60) * seconds;
+
+
+        hourhand.style.transform = `rotate(${hourrotation}deg)`
+        minhand.style.transform = `rotate(${minuterotation}deg)`
+        sechand.style.transform = `rotate(${secondrotation}deg)`
+    }
+
+    setInterval(updateTime, 1000);
+
+
+    function changeBackground() {
+        let selectElement = document.getElementById('backgroundSelect');
+        let selectedOption = selectElement.options[selectElement.selectedIndex];
+        let selectedValue = selectedOption.value;
+        let selectedColor = selectedOption.getAttribute('data-color');
+        container.style.backgroundImage = `url(${selectedValue})`;
+        document.body.style.backgroundColor = selectedColor;
+    }
+
+    setInterval(updateTime, 1000);
+</script>
+
+</html>
